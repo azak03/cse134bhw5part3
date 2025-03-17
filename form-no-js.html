@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anthony Z.'s contact!">
+    <meta name="keywords" content="Anthony Z., Contact">
+    <meta name="author" content="Anthony Z.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact me</title>
+    <link rel="stylesheet" href="resources/globalstyle.css">
+    <link rel="stylesheet" href="resources/contactstyle.css">
+</head>
+<body>
+    <nav class="links">
+        <button id="mobile" type="button">☰</button>
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <hgroup>
+        <h1><span class="container">Contact</span></h1>
+    </hgroup>
+    <section>
+        <h2>Contact Form</h2>
+        <form action="https://httpbin.org/get" method="GET">
+            <fieldset>
+                <label for="name">Name:<em>*</em></label>
+                <input type="text" id="name" name="name" required minlength="4" maxlength="60" pattern="^[A-Za-z\s]+$">
+                <label for="email">Email:<em>*</em></label>
+                <input type="text" id="email" name="email" required minlength="5" maxlength="60" pattern="^(?!.*\..*\.)(?!.*@.*@).*">
+                <label for="comments">Comments:<em>*</em></label>
+                <textarea id="comments" name="comments" required minlength="5" maxlength="500"></textarea>
+                <input type="hidden" id="possible_bot" name="possible_bot" value="true">
+                <button type="submit">Submit</button>
+                <br>
+                <br>
+                <output class="error-message">OUTPUT: An error occurred.</output>
+                <br>
+                <output class="info-message">OUTPUT: Your form was sent.</output>
+            </fieldset>
+            <br>
+      </form>
+    </section>
+
+    <noscript>Warning: Your browser does not have JavaScript support or JavaScript is disabled! This may cause problems when viewing my site!</noscript>
+</body>
+</html>

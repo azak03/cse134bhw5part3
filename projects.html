@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anthony Z.'s projects!">
+    <meta name="keywords" content="Anthony Z., Projects">
+    <meta name="author" content="Anthony Z.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My projects</title>
+    <link rel="stylesheet" href="resources/globalstyle.css">
+    <link rel="stylesheet" href="resources/projectstyle.css">
+    <script src="resources/theme.js"></script>
+</head>
+<body>
+    <nav class="links">
+        <button id="mobile" type="button">☰</button>
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div>Theme:</div>
+    <noscript> WARNING: JavaScript disabled! The theme toggler is not available.</noscript>
+    <button id="theme-button" class="off">🌙</button>
+    <hgroup>
+        <h1><span class="container">My Projects</span></h1>
+    </hgroup>
+    <button id="local-button">Load Local</button>
+    <br>
+    <button id="remote-button">Load Remote</button>
+    <br>
+    <div class="card-container" id="card-container"></div>
+    <script>
+        class ProjectCard extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <h2></h2>
+                    <figure>
+                        <picture>
+                            <source srcset="" media="(max-width: 420px)">
+                            <source srcset="" media="(max-width: 768px)">
+                            <source srcset="" media="(min-width: 769px)">
+                            <img part="cardimg" src="" alt="">
+                        </picture>
+                    </figure>
+                    <p></p>
+                    <a part="carda" href="" target="_blank">Read More</a>
+                `;
+            }
+            connectedCallback() {
+                this.shadowRoot.querySelector('h2').textContent = this.getAttribute('title');
+                this.shadowRoot.querySelector('img').src = this.getAttribute('image');
+                this.shadowRoot.querySelector('source[media="(max-width: 420px)"]').srcset = this.getAttribute('fallbackimage350');
+                this.shadowRoot.querySelector('source[media="(max-width: 768px)"]').srcset = this.getAttribute('fallbackimage500');
+                this.shadowRoot.querySelector('source[media="(min-width: 769px)"]').srcset = this.getAttribute('image');
+                this.shadowRoot.querySelector('img').alt = this.getAttribute('alt');
+                this.shadowRoot.querySelector('p').textContent = this.getAttribute('description');
+                this.shadowRoot.querySelector('a').href = this.getAttribute('link');
+            }
+        }
+        customElements.define('project-card', ProjectCard);
+        
+        function renderProjects(data, container) {
+            container.innerHTML = "";
+            data.forEach(item => {
+                let card = document.createElement("project-card");
+                card.setAttribute("title", item.title);
+                card.setAttribute("image", item.image);
+                card.setAttribute("fallbackimage500", item.fallbackimage500);
+                card.setAttribute("fallbackimage350", item.fallbackimage350);
+                card.setAttribute("alt", item.alt);
+                card.setAttribute("description", item.description);
+                card.setAttribute("link", item.link);
+                container.appendChild(card);
+            });
+        }
+        let projects = [
+            {
+                title: "XSS Payload",
+                image: "resources/xss-800.webp",
+                fallbackimage500: "resources/xss-500.webp",
+                fallbackimage350: "resources/xss-350.webp",
+                alt: "Image of XSS",
+                description: "As part of the projects I worked on in CSE 127, I created a functional XSS payload that logged user-related information such as username and recent searches. XSS refers to cross-site scripting, in which an attacker exploits vulnerabilities to achieve arbitrary HTML/JavaScript execution in a victim's browser.",
+                link: "https://www.cloudflare.com/learning/security/threats/cross-site-scripting/"
+            },
+            {
+                title: "Statistical Analysis Project",
+                image: "resources/cogs-800.png",
+                fallbackimage500: "resources/cogs-500.png",
+                fallbackimage350: "resources/cogs-350.png",
+                alt: "GIF of printing in action",
+                description: "My peers and I worked on a project in COGS 108 where we analyzed what geographical factors determined house prices. We evaluated datasets using python libraries such as numpy, pandas, and seaborn to plot the data and draw conclusions.",
+                link: "https://www.kaggle.com/code/imoore/intro-to-exploratory-data-analysis-eda-in-python"
+            },
+            {
+                title: "AI Recipe Creator",
+                image: "resources/aichat-800.jpg",
+                fallbackimage500: "resources/aichat-500.jpg",
+                fallbackimage350: "resources/aichat-350.jpg",
+                alt: "Screenshot of AI voice assistant",
+                description: "In CSE 110, I created a program in Java which converts your voice data to text and feeds it to OpenAI, which then responds with the recipe of the meal you requested. This project was an interesting application of voice recognition technology and AI, which is starting to become more mainstream with AI voice assistants on the rise.",
+                link: "https://www.forbes.com/sites/kirkogunrinde/2024/07/30/openai-begins-releasing-chatgpt-voice-assistant-without-scarlett-johansson-like-voice/"
+            },
+            {
+                title: "Autoupdate Project",
+                image: "resources/autoupdate-800.jpg",
+                fallbackimage500: "resources/autoupdate-500.jpg",
+                fallbackimage350: "resources/autoupdate-350.jpg",
+                alt: "Screenshot of autoupdating",
+                description: "I created a program that fetches the latest version and automatically updates itself if there are new changes. This allows the user to update the software without having to manually re-download the latest EXE, and this is a feature found in many popular programs today.",
+                link: "https://medium.com/@ffreitasalves/how-to-create-an-application-with-auto-update-using-python-and-esky-ab0b3b990a96"
+            },
+        ];
+    localStorage.setItem("projects", JSON.stringify(projects));
+        
+    document.addEventListener("DOMContentLoaded", () => {
+        let container = document.getElementById("card-container");
+        document.getElementById("local-button").addEventListener("click", () => {
+            let data = JSON.parse(localStorage.getItem("projects")) || [];
+            renderProjects(data, container);
+        });
+        document.getElementById("remote-button").addEventListener("click", () => {
+            fetch("https://api.jsonbin.io/v3/b/67d6417f8960c979a5726c3f")
+            .then(response => response.json())
+            .then(data => {
+                renderProjects(data.record, container);
+            })
+            .catch(error => console.error("Error fetching remote data:", error));
+        });
+    });
+    </script>
+
+    <noscript>Warning: Your browser does not have JavaScript support or JavaScript is disabled! This may cause problems when viewing my site!</noscript>
+</body>
+</html>

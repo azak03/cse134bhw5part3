@@ -1,0 +1,3 @@
+blockquote {
+  color: color-mix(in display-p3, red 80%, orange 20%);
+}

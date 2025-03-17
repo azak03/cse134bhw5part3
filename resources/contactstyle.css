@@ -1,0 +1,104 @@
+:root {
+  --inp-col: #343436;
+  --txt-col: white;
+}
+
+form {
+    padding: 0 3dvw;
+}
+fieldset {
+    border: none;
+    padding: 0;
+}
+label {
+    margin-bottom: 2.2rem;
+}
+
+.light-mode {
+  --inp-col: #D3D3D3;
+  --txt-col: black;
+}
+
+input, textarea {
+    padding: 0.8rem;
+    border: none;
+    background-color: var(--inp-col);
+    color: var(--txt-col);
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #5488b8;
+    border: none;
+}
+
+em {
+    color: red;
+    font-size: 1.4rem;
+}
+
+textarea {
+    resize: none;
+    height: 15vh;
+}
+
+.error-message {
+    display: none;
+    color: red;
+}
+.info-message {
+    display: none;
+    color: green;
+}
+
+input:required, textarea:required {
+    outline: 0.3px dashed #cc474b;
+}
+
+input:user-invalid, textarea:user-invalid {
+    outline: 3px solid red;
+    box-shadow: 0 0 10px red;
+}
+
+input:user-valid, textarea:user-valid {
+    outline: 3px solid green;
+    box-shadow: 0 0 10px green;
+}
+
+#counter {
+    color: green;
+}
+#counter.warn {
+    color: orange;
+}
+#counter.error {
+    color: red;
+}
+
+.flash {
+    animation: flash 0.5s alternate;
+}
+
+.fade {
+    display: block;
+    animation: fade 3s;
+}
+
+@keyframes flash {
+    from { background-color: red; }
+    to { background-color: #343436; }
+}
+
+@keyframes fade {
+   0% {opacity: 1;}
+   100% {opacity: 0; display: none; opacity: 1;} 
+} 
