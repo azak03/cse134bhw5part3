@@ -82,6 +82,7 @@ body {
     align-items: center;
     text-align: center;
     color: var(--font-col);
+    transition: background-color 1s ease, color 1s ease;
 }
 
 h1 {
@@ -90,6 +91,7 @@ h1 {
 
 h2 {
   color: var(--white);
+  transition: color 1s ease;
 }
 
 section {
