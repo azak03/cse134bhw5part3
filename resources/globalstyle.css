@@ -15,6 +15,13 @@
   font-style: normal;
 }
 
+footer {
+  font-size: 1rem;
+}
+#effect {
+  color: green;
+}
+
 .light-mode {
   --backg-color: white;
   --white: black;
